@@ -6,12 +6,12 @@ const languages = [
   {
     code: 'en',
     name: 'English',
-    flag: '/src/English Flag.png'
+    flag: '/English Flag.png'
   },
   {
     code: 'fr',
     name: 'Français',
-    flag: '/src/France flag.png'
+    flag: '/France flag.png'
   }
 ];
 

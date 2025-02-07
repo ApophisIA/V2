@@ -7,7 +7,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { t } = useLanguage();
+  const { t, getLocalizedPath } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,9 +19,9 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: t('nav.home'), path: '/' },
-    { name: t('nav.services'), path: '/services' },
-    { name: t('nav.contact'), path: '/contact' }
+    { name: t('nav.home'), path: '' },
+    { name: t('nav.services'), path: 'services' },
+    { name: t('nav.contact'), path: 'contact' }
   ];
 
   return (
@@ -34,7 +34,7 @@ const Header = () => {
     >
       <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
         <div className="flex items-center">
-          <Link to="/">
+          <Link to={getLocalizedPath('')}>
             <img
               src="/Apophis.png"
               alt="Apophis.IA"
@@ -50,7 +50,7 @@ const Header = () => {
           {navItems.map((item) => (
             <Link
               key={item.name}
-              to={item.path}
+              to={getLocalizedPath(item.path)}
               className="text-white hover:text-purple-400 transition-colors duration-300"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -75,7 +75,7 @@ const Header = () => {
               {navItems.map((item) => (
                 <Link
                   key={item.name}
-                  to={item.path}
+                  to={getLocalizedPath(item.path)}
                   className="text-white hover:text-purple-400 py-2 transition-colors duration-300"
                   onClick={() => setIsMenuOpen(false)}
                 >

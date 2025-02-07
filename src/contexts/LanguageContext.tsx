@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 type Language = 'en' | 'fr';
 
@@ -6,6 +7,7 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  getLocalizedPath: (path: string) => string;
 }
 
 const translations = {
@@ -339,14 +341,29 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguageState] = useState<Language>('en');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const setLanguage = useCallback((lang: Language) => {
+    setLanguageState(lang);
+    // Update URL to reflect new language
+    const newPath = location.pathname.replace(/^\/(en|fr)/, `/${lang}`);
+    navigate(newPath);
+  }, [location.pathname, navigate]);
+
+  const getLocalizedPath = useCallback((path: string) => {
+    // Remove leading slash if present
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    return `/${language}/${cleanPath}`;
+  }, [language]);
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations[typeof language]] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, getLocalizedPath }}>
       {children}
     </LanguageContext.Provider>
   );
