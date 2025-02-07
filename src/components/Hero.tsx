@@ -38,7 +38,7 @@ const Hero = () => {
       <div className="text-center z-10 px-4">
         <div className="mb-8 transform hover:scale-105 transition-transform duration-500">
           <img 
-            src="/src/Symbole transp.png" 
+            src="/public/Symbole transp.png" 
             alt="Apophis.IA" 
             className="h-64 md:h-96 mx-auto transition-all duration-300 animate-glow will-change-[filter]"
           />
