@@ -22,6 +22,11 @@ const ServiceSection = ({ title, subtitle, description, features, buttonText, bu
   };
 }) => {
   const { t, getLocalizedPath } = useLanguage();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(getLocalizedPath(buttonLink));
+  };
 
   return (
     <div className="space-y-12">
@@ -142,7 +147,8 @@ const Feature = ({ icon: Icon, title, description }: {
 );
 
 export const ServicesOverview = () => {
-  const { t } = useLanguage();
+  const { t, getLocalizedPath } = useLanguage();
+  const navigate = useNavigate();
 
   const services = [
     {
@@ -203,7 +209,7 @@ export const ServicesOverview = () => {
 
                 <div className="text-center">
                   <Link
-                    to={service.buttonLink}
+                    onClick={() => navigate(getLocalizedPath(service.buttonLink))}
                     className="inline-flex items-center space-x-3 bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105"
                   >
                     <span>{service.buttonText}</span>
