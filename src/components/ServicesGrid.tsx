@@ -13,6 +13,8 @@ const ServiceCard = ({ title, description, icon: Icon, link, buttonText, image, 
   imagePosition?: 'left' | 'right';
   animate?: boolean;
 }) => {
+  const { getLocalizedPath } = useLanguage();
+
   return (
     <div className="relative">
       <div className="relative flex items-center min-h-[600px]">
@@ -38,7 +40,7 @@ const ServiceCard = ({ title, description, icon: Icon, link, buttonText, image, 
             </p>
 
             <Link 
-              to={link}
+              to={getLocalizedPath(link)}
               className="inline-flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:translate-x-2"
             >
               <span>{buttonText}</span>

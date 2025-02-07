@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, getLocalizedPath } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -27,17 +27,17 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/services" className="text-gray-400 hover:text-purple-400 transition-colors">
+                <Link to={getLocalizedPath('services')} className="text-gray-400 hover:text-purple-400 transition-colors">
                   {t('nav.services')}
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-400 hover:text-purple-400 transition-colors">
+                <Link to={getLocalizedPath('contact')} className="text-gray-400 hover:text-purple-400 transition-colors">
                   {t('nav.contact')}
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="text-gray-400 hover:text-purple-400 transition-colors">
+                <Link to={getLocalizedPath('faq')} className="text-gray-400 hover:text-purple-400 transition-colors">
                   FAQ
                 </Link>
               </li>
@@ -48,17 +48,17 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">{t('footer.legal')}</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/privacy" className="text-gray-400 hover:text-purple-400 transition-colors">
+                <Link to={getLocalizedPath('privacy')} className="text-gray-400 hover:text-purple-400 transition-colors">
                   {t('footer.privacyPolicy')}
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="text-gray-400 hover:text-purple-400 transition-colors">
+                <Link to={getLocalizedPath('terms')} className="text-gray-400 hover:text-purple-400 transition-colors">
                   {t('footer.terms')}
                 </Link>
               </li>
               <li>
-                <Link to="/conditions" className="text-gray-400 hover:text-purple-400 transition-colors">
+                <Link to={getLocalizedPath('conditions')} className="text-gray-400 hover:text-purple-400 transition-colors">
                   {t('footer.conditions')}
                 </Link>
               </li>
