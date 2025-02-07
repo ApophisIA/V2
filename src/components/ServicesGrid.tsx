@@ -76,7 +76,7 @@ const ServicesGrid = () => {
       icon: Bot,
       link: '/services/chatbot',
       buttonText: t('chatbot.getYours'),
-      image: '/Apophis.IA CHATBOT copy.png',
+      image: '/Apophis.IA CHATBOT.png',
       animate: true
     },
     {

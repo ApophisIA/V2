@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <img 
-              src="/public/Symbole transp.png" 
+              src="/Symbole transp.png" 
               alt="Apophis.IA" 
               className="h-12 mb-4"
             />
