@@ -36,7 +36,7 @@ const Header = () => {
         <div className="flex items-center">
           <Link to="/">
             <img
-              src="/public/Apophis.png"
+              src="/Apophis.png"
               alt="Apophis.IA"
               className={`transition-all duration-300 ${
                 isScrolled ? 'h-20' : 'h-24'
