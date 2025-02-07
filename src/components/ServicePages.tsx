@@ -155,7 +155,7 @@ export const ServicesOverview = () => {
         { title: t('features.availability'), description: t('features.availability.desc') }
       ],
       buttonText: t('chatbot.getYours'),
-      buttonLink: '/services/chatbot'
+      buttonLink: '/en/services/chatbot'
     },
     {
       title: t('automation.title'),
@@ -167,7 +167,7 @@ export const ServicesOverview = () => {
         { title: t('features.workflow'), description: t('features.workflow.desc') }
       ],
       buttonText: t('automation.getYours'),
-      buttonLink: '/services/automation'
+      buttonLink: '/en/services/automation'
     }
   ];
 
@@ -235,7 +235,7 @@ export const ChatbotService = () => {
           subtitle={t('chatbot.subtitle')}
           description={t('chatbot.description')}
           buttonText={t('chatbot.getYours')}
-          buttonLink="/services/chatbot/form"
+          buttonLink="/en/services/chatbot/form"
           features={[
             {
               icon: Bot,
@@ -338,7 +338,7 @@ export const AutomationService = () => {
           subtitle={t('automation.subtitle')}
           description={t('automation.description')}
           buttonText={t('automation.getYours')}
-          buttonLink="/services/automation/form"
+          buttonLink="/en/services/automation/form"
           features={[
             {
               icon: Bot,

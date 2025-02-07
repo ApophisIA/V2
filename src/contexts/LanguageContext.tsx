@@ -165,7 +165,22 @@ const translations = {
     'form.chatbot.min.chars': 'minimum characters required',
     'form.chatbot.min.chars.met': 'Minimum length requirement met',
     'form.chatbot.nocost': 'Rest assured, no payment will be charged immediately after submission.',
-    'form.chatbot.chars.left': 'characters remaining'
+    'form.chatbot.chars.left': 'characters remaining',
+
+    // Automation Form
+    'form.automation.title': 'Automation Request',
+    'form.automation.description': 'Description of your Automation Needs',
+    'form.automation.description.placeholder': 'Please describe the processes you want to automate. Include specific requirements, current challenges, and desired outcomes.',
+    'form.automation.min.chars': 'minimum characters required',
+    'form.automation.chars.left': 'characters remaining',
+    'form.automation.investment': 'Investment Level',
+    'form.automation.select.investment': 'Select your investment level',
+    'form.automation.starter': 'Starter Pack (Less than €5,000)',
+    'form.automation.business': 'Business Suite (€5,000 - €10,000)',
+    'form.automation.enterprise': 'Entreprise Solution (€10,000+)',
+    'form.automation.investment.note': 'Choose a range that fits your automation needs. We will tailor our solution accordingly.',
+    'form.automation.min.chars.met': 'Minimum Validated'
+  
   },
   fr: {
     // Navigation
@@ -334,7 +349,8 @@ const translations = {
     'form.automation.starter': 'Pack Démarrage (Moins de 5 000€)',
     'form.automation.business': 'Suite Business (5 000€ - 10 000€)',
     'form.automation.enterprise': 'Solution Entreprise (10 000€+)',
-    'form.automation.investment.note': 'Choisissez une gamme qui correspond à vos besoins d\'automatisation. Nous adapterons notre solution en conséquence.'
+    'form.automation.investment.note': 'Choisissez une gamme qui correspond à vos besoins d\'automatisation. Nous adapterons notre solution en conséquence.',
+    'form.automation.min.chars.met': 'Minimum Validé'
   }
 };
 
