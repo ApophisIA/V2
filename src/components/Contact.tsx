@@ -16,7 +16,7 @@ const Contact = () => {
               <div className="p-8 md:p-12">
                 <div className="mb-12">
                   <img 
-                    src="Symbole transp.png" 
+                    src="/Symbole transp.png" 
                     alt="Apophis.IA" 
                     className="h-24 mb-6 animate-glow"
                   />

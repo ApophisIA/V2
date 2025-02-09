@@ -14,6 +14,7 @@ type FormData = {
   website: string;
   automationDescription: string;
   budget: string;
+  termsAccepted: boolean;
 };
 
 const initialFormData: FormData = {
@@ -25,7 +26,8 @@ const initialFormData: FormData = {
   email: '',
   website: '',
   automationDescription: '',
-  budget: ''
+  budget: '',
+  termsAccepted: false
 };
 
 const validateEmail = (email: string): boolean => {
@@ -93,7 +95,8 @@ const AutomationForm = () => {
       validateEmail(formData.email) &&
       validateUrl(formData.website) &&
       formData.automationDescription.length >= 50 &&
-      formData.budget !== ''
+      formData.budget !== '' &&
+      formData.termsAccepted === true
     );
   };
 
@@ -110,6 +113,7 @@ const AutomationForm = () => {
     formDataToSend.append('website', formData.website);
     formDataToSend.append('automationDescription', formData.automationDescription);
     formDataToSend.append('budget', formData.budget);
+    formDataToSend.append('termsAccepted', formData.termsAccepted ? 'true' : 'false');
 
     try {
       const response = await fetch('https://hook.eu2.make.com/x6byfln95hgd21pz5syiwvycjoieiw3h', {
@@ -309,6 +313,21 @@ const AutomationForm = () => {
               <p className="mt-2 text-sm text-gray-400">
                 {t('form.automation.investment.note')}
               </p>
+            </div>
+
+            {/* Nouvelle case à cocher pour accepter les conditions */}
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                name="termsAccepted"
+                checked={formData.termsAccepted}
+                onChange={handleInputChange}
+                className="form-checkbox text-purple-600 rounded bg-gray-800 border-gray-700"
+                required
+              />
+              <span className="ml-2 text-white text-sm">
+                {t('form.terms')}
+              </span>
             </div>
 
             <div className="mt-8">

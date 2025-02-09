@@ -166,6 +166,7 @@ const translations = {
     'form.chatbot.min.chars.met': 'Minimum length requirement met',
     'form.chatbot.nocost': 'Rest assured, no payment will be charged immediately after submission.',
     'form.chatbot.chars.left': 'characters remaining',
+    'form.terms' : 'I accept the terms and conditions and agree to be contacted.',
 
     // Automation Form
     'form.automation.title': 'Automation Request',
@@ -337,6 +338,7 @@ const translations = {
     'form.chatbot.min.chars.met': 'Longueur minimum atteinte',
     'form.chatbot.nocost': 'Rassurez-vous, aucun paiement ne sera prélevé immédiatement après la soumission.',
     'form.chatbot.chars.left': 'caractères restants',
+    'form.terms' : 'J\'accepte les termes et conditions et accepte d\'être contacté.',
 
     // Automation Form
     'form.automation.title': 'Demande d\'Automatisation',

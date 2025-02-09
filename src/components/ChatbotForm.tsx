@@ -472,7 +472,7 @@ const ChatbotForm = () => {
                 required
               />
               <span className="ml-2 text-white text-sm">
-                I accept the terms and conditions and agree to be contacted.
+                {t('form.terms')}
               </span>
             </div>
 
