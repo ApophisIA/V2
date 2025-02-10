@@ -10,27 +10,47 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
+      // On peut récupérer l'URL si nécessaire
       var current_url = window.location.href;
     </script>
     <script type="text/javascript">
       (function(d, t) {
-          var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-          v.onload = function() {
-            window.voiceflow.chat.load({
-              verify: { projectID: '677bda5f5e5388ed99d28cf1' },
-              url: 'https://general-runtime.voiceflow.com',
-              versionID: 'production'
-              launch: {
-              event: {
-                type: "launch",
+        var v = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        v.onload = function() {
+          // Charge le widget Voiceflow
+          window.voiceflow.chat.load({
+            verify: { projectID: '677bda5f5e5388ed99d28cf1' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'production'
+          }).then(() => {
+            // Récupère le chemin de l'URL
+            var path = window.location.pathname;
+            // Vérifie si l'URL commence par /en ou /fr et envoie l'event correspondant
+            if (path.startsWith('/en')) {
+              window.voiceflow.chat.interact({
+                type: 'event',
                 payload: {
-                  url: current_url 
+                  event: {
+                    name: 'english_version' // Cet event doit être défini dans Voiceflow
+                  }
                 }
-              }
+              });
+            } else if (path.startsWith('/fr')) {
+              window.voiceflow.chat.interact({
+                type: 'event',
+                payload: {
+                  event: {
+                    name: 'french_version' // Cet event doit être défini dans Voiceflow
+                  }
+                }
+              });
             }
-            });
-          }
-          v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+          });
+        };
+        v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+        v.type = "text/javascript";
+        s.parentNode.insertBefore(v, s);
       })(document, 'script');
     </script>
   </body>
