@@ -2,49 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/Apophis.svg" />
+    <link rel="icon" href="/Apophis.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Apophis.IA</title>
+    <title>Chatbot Apophis.IA</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      // On peut récupérer l'URL si nécessaire
-      var current_url = window.location.href;
+      // Détecte la langue en fonction de l'URL.
+      // Ici, on considère que si le pathname commence par "/fr", c'est du français, sinon "en".
+      var language_url = "en"; // valeur par défaut
+      if (window.location.pathname.startsWith('/fr')) {
+        language_url = "fr";
+      }
+      console.log("Langue détectée :", language_url);
     </script>
+
     <script type="text/javascript">
       (function(d, t) {
         var v = d.createElement(t),
             s = d.getElementsByTagName(t)[0];
         v.onload = function() {
-          // Charge le widget Voiceflow
+          // Charge le widget avec autostart:false pour ne pas démarrer automatiquement.
+          // Lors du premier clic, le widget s'ouvrira et enverra une requête de lancement (launch)
+          // incluant le payload qui contient la variable "language".
           window.voiceflow.chat.load({
             verify: { projectID: '677bda5f5e5388ed99d28cf1' },
             url: 'https://general-runtime.voiceflow.com',
-            versionID: 'production'
-          }).then(() => {
-            // Récupère le chemin de l'URL
-            var path = window.location.pathname;
-            // Vérifie si l'URL commence par /en ou /fr et envoie l'event correspondant
-            if (path.startsWith('/en')) {
-              window.voiceflow.chat.interact({
-                type: 'event',
+            versionID: 'production',
+            autostart: false,  // Le widget ne démarre pas tant que l'utilisateur n'a pas cliqué.
+            launch: {
+              event: {
+                type: "launch",
                 payload: {
-                  event: {
-                    name: 'english_version' // Cet event doit être défini dans Voiceflow
-                  }
+                  language: language_url  // Variable envoyée à Voiceflow (ex: "fr" ou "en")
                 }
-              });
-            } else if (path.startsWith('/fr')) {
-              window.voiceflow.chat.interact({
-                type: 'event',
-                payload: {
-                  event: {
-                    name: 'french_version' // Cet event doit être défini dans Voiceflow
-                  }
-                }
-              });
+              }
             }
           });
         };
