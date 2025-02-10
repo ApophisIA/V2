@@ -17,6 +17,14 @@
               verify: { projectID: '677bda5f5e5388ed99d28cf1' },
               url: 'https://general-runtime.voiceflow.com',
               versionID: 'production'
+              launch: {
+              event: {
+                type: "launch",
+                payload: {
+                  url: current_url 
+                }
+              }
+            }
             });
           }
           v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
