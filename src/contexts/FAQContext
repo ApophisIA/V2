@@ -1,0 +1,93 @@
+// src/contexts/FAQContext.tsx
+import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+type Language = 'en' | 'fr';
+
+interface FAQContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  f: (key: string) => string;
+}
+
+const faqTranslations = {
+  en: {
+    // FAQ Titles and subtitles
+    'faq.title': "Frequently Asked Questions",
+    'faq.subtitle': "Find answers to common questions about our services",
+    // FAQ Questions and Answers
+    'faq.q1': "What are your chatbot pricing plans?",
+    'faq.a1': "Our chatbot services include both development and monthly maintenance costs. For example, the development cost starts from €1,250, and our maintenance plans range from €700 to €1,500 per month, depending on the features and support level.",
+    'faq.q2': "How is the chatbot deployed on my website?",
+    'faq.a2': "Deployment is simple and straightforward. We provide you with a code snippet to add to your website's HTML body section. Once added, the chatbot becomes fully functional on your site.",
+    'faq.q3': "What types of chatbots do you offer?",
+    'faq.a3': "We offer fully customizable AI chatbots that can be integrated with websites, WhatsApp, and other platforms. They can handle customer service, lead generation, and automated support in multiple languages.",
+    'faq.q4': "How long does it take to implement a chatbot?",
+    'faq.a4': "Our standard implementation timeline is 1 week for basic chatbots. More complex integrations may take 2-3 weeks depending on your specific requirements.",
+    'faq.q5': "What languages do your chatbots support?",
+    'faq.a5': "Our chatbots support multiple languages including English, French, German, Spanish, and more. Additional languages can be added based on your needs.",
+    'faq.q6': "Do you offer ongoing support?",
+    'faq.a6': "Yes, we offer comprehensive support through our various maintenance plans, ranging from basic bug fixes to 24/7 priority assistance.",
+    'faq.q7': "Can I upgrade or downgrade my maintenance plan?",
+    'faq.a7': "Yes, you can change your maintenance plan with 30 days notice, allowing you to adjust the service level as your needs evolve.",
+    'faq.q8': "How do you handle data privacy and security?",
+    'faq.a8': "We adhere to strict GDPR compliance and implement industry-standard security measures. All data is encrypted and stored securely with regular backups and monitoring."
+  },
+  fr: {
+    // Titres et sous-titres FAQ
+    'faq.title': "Questions Fréquemment Posées",
+    'faq.subtitle': "Trouvez des réponses aux questions courantes concernant nos services",
+    // Questions et réponses FAQ
+    'faq.q1': "Quels sont vos plans tarifaires pour les chatbots ?",
+    'faq.a1': "Nos services de chatbot incluent les coûts de développement et la maintenance mensuelle. Par exemple, le coût de développement débute à partir de 1 250 €, et nos plans de maintenance varient de 700 € à 1 500 € par mois, selon les fonctionnalités et le niveau de support.",
+    'faq.q2': "Comment le chatbot est-il déployé sur mon site web ?",
+    'faq.a2': "Le déploiement est simple et direct. Nous vous fournissons un extrait de code à ajouter dans la section body du HTML de votre site. Une fois ajouté, le chatbot devient entièrement fonctionnel sur votre site.",
+    'faq.q3': "Quels types de chatbots proposez-vous ?",
+    'faq.a3': "Nous proposons des chatbots IA entièrement personnalisables pouvant être intégrés aux sites web, à WhatsApp, et à d'autres plateformes. Ils peuvent gérer le service client, la génération de prospects et l'assistance automatisée en plusieurs langues.",
+    'faq.q4': "Combien de temps faut-il pour mettre en place un chatbot ?",
+    'faq.a4': "Notre délai standard de mise en place est d'une semaine pour des chatbots basiques. Des intégrations plus complexes peuvent prendre de 2 à 3 semaines selon vos exigences spécifiques.",
+    'faq.q5': "Quelles langues vos chatbots supportent-ils ?",
+    'faq.a5': "Nos chatbots supportent plusieurs langues, dont l'anglais, le français, l'allemand, l'espagnol, et plus encore. Nous pouvons ajouter d'autres langues en fonction de vos besoins.",
+    'faq.q6': "Proposez-vous un support continu ?",
+    'faq.a6': "Oui, nous offrons un support complet via nos différents plans de maintenance, allant des corrections de bugs basiques à une assistance prioritaire 24/7.",
+    'faq.q7': "Puis-je mettre à niveau ou rétrograder mon plan de maintenance ?",
+    'faq.a7': "Oui, vous pouvez modifier votre plan de maintenance avec un préavis de 30 jours, vous permettant d'ajuster le niveau de service selon l'évolution de vos besoins.",
+    'faq.q8': "Comment gérez-vous la confidentialité et la sécurité des données ?",
+    'faq.a8': "Nous respectons strictement le RGPD et mettons en place des mesures de sécurité conformes aux normes de l'industrie. Toutes les données sont cryptées et stockées de manière sécurisée, avec des sauvegardes régulières et une surveillance continue."
+  }
+};
+
+const FAQContext = createContext<FAQContextType | undefined>(undefined);
+
+export const FAQProvider = ({ children }: { children: ReactNode }) => {
+  // Nous utilisons les mêmes hooks de navigation et de localisation pour mettre à jour l'URL en cas de changement de langue
+  const [language, setLanguageState] = useState<Language>('en');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const setLanguage = useCallback((lang: Language) => {
+    setLanguageState(lang);
+    // Mise à jour de l'URL pour refléter la nouvelle langue
+    const newPath = location.pathname.replace(/^\/(en|fr)/, `/${lang}`);
+    navigate(newPath);
+  }, [location.pathname, navigate]);
+
+  // Fonction de traduction pour les FAQ
+  const f = (key: string): string => {
+    return faqTranslations[language][key as keyof typeof faqTranslations[typeof language]] || key;
+  };
+
+  return (
+    <FAQContext.Provider value={{ language, setLanguage, f }}>
+      {children}
+    </FAQContext.Provider>
+  );
+};
+
+export const useFAQ = () => {
+  const context = useContext(FAQContext);
+  if (context === undefined) {
+    throw new Error('useFAQ must be used within a FAQProvider');
+  }
+  return context;
+};

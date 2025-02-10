@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { Bot, Cog } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const ServiceCard = ({ title, description, icon: Icon, link, buttonText, image, imagePosition = 'right', animate = true }: {
@@ -69,7 +69,16 @@ const ServiceCard = ({ title, description, icon: Icon, link, buttonText, image, 
 };
 
 const ServicesGrid = () => {
-  const { t } = useLanguage();
+  // Récupération du paramètre "lang" depuis l'URL
+  const { lang } = useParams<{ lang: 'en' | 'fr' }>();
+  const { t, setLanguage } = useLanguage();
+
+  // Met à jour le contexte de langue dès que "lang" change dans l'URL
+  useEffect(() => {
+    if (lang) {
+      setLanguage(lang);
+    }
+  }, [lang, setLanguage]);
 
   const services = [
     {

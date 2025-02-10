@@ -1,14 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { t, getLocalizedPath } = useLanguage();
+  // On récupère t, getLocalizedPath, setLanguage et la langue actuelle depuis le contexte
+  const { t, getLocalizedPath, setLanguage, language } = useLanguage();
+  const location = useLocation();
 
+  // Lorsque l'URL change, on extrait le premier segment pour déterminer la langue
+  useEffect(() => {
+    const pathSegments = location.pathname.split('/');
+    // Le premier segment après le '/' devrait contenir la langue (ex: "en" ou "fr")
+    const langFromUrl = pathSegments[1];
+    if ((langFromUrl === 'en' || langFromUrl === 'fr') && langFromUrl !== language) {
+      setLanguage(langFromUrl);
+    }
+  }, [location, setLanguage, language]);
+
+  // Gestion du scroll pour modifier l'apparence du header
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);

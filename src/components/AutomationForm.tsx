@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Check } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { countryCodes } from '../data/countryCodes';
-
 
 type FormData = {
   firstName: string;
@@ -50,8 +50,27 @@ const validateUrl = (url: string): boolean => {
   }
 };
 
+const calculatePrice = (basePrice: number, duration: string): number => {
+  switch (duration) {
+    case 'annually':
+      return basePrice * 12 * 0.8; // 20% discount on annual total
+    case 'semi-annually':
+      return basePrice * 6 * 0.9; // 10% discount on 6-month total
+    default:
+      return basePrice;
+  }
+};
+
 const AutomationForm = () => {
-  const { t } = useLanguage();
+  // Récupération du paramètre "lang" depuis l'URL et mise à jour du contexte de langue
+  const { lang } = useParams<{ lang: 'en' | 'fr' }>();
+  const { t, language, setLanguage } = useLanguage();
+  useEffect(() => {
+    if (lang && lang !== language) {
+      setLanguage(lang);
+    }
+  }, [lang, language, setLanguage]);
+
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [emailError, setEmailError] = useState('');
   const [phoneError, setPhoneError] = useState('');
@@ -290,7 +309,8 @@ const AutomationForm = () => {
                     : t('form.automation.min.chars.met')}
                 </span>
                 <span className="text-gray-400">
-                  {charCount}/1000 {t('form.automation.chars.left')}</span>
+                  {charCount}/1000 {t('form.automation.chars.left')}
+                </span>
               </div>
             </div>
 

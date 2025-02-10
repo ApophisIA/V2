@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useParams } from 'react-router-dom';
 
 const Contact = () => {
-  const { t } = useLanguage();
+  const { t, language, setLanguage, getLocalizedPath } = useLanguage();
+  const { lang } = useParams<{ lang: 'en' | 'fr' }>();
+
+  // Met à jour le contexte de langue si le paramètre "lang" dans l'URL change
+  useEffect(() => {
+    if (lang && lang !== language) {
+      setLanguage(lang);
+    }
+  }, [lang, language, setLanguage]);
 
   return (
     <div className="min-h-screen pt-32 pb-20 px-4">

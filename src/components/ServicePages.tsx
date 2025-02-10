@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Bot, Globe, Zap, Database, Clock, BarChart3, Workflow, Mail, Users, GitBranch, CheckCircle2, ArrowRight, Plus, Rocket, Zap as Zap2, Check } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
+// -----------------------------
+// Composant ServiceSection
+// -----------------------------
 const ServiceSection = ({ title, subtitle, description, features, buttonText, buttonLink, pricingTiers }: {
   title: React.ReactNode;
   subtitle: string;
@@ -21,7 +24,7 @@ const ServiceSection = ({ title, subtitle, description, features, buttonText, bu
     }[];
   };
 }) => {
-  const { t } = useLanguage();
+  const { t, getLocalizedPath } = useLanguage();
 
   return (
     <div className="space-y-12">
@@ -112,6 +115,7 @@ const ServiceSection = ({ title, subtitle, description, features, buttonText, bu
       )}
 
       <div className="text-center">
+        {/* Vous pouvez éventuellement utiliser getLocalizedPath ici pour le bouton si besoin */}
         <Link
           to={buttonLink}
           className="inline-flex items-center space-x-3 bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105"
@@ -124,6 +128,9 @@ const ServiceSection = ({ title, subtitle, description, features, buttonText, bu
   );
 };
 
+// -----------------------------
+// Composant Feature (pour ServiceSection)
+// -----------------------------
 const Feature = ({ icon: Icon, title, description }: {
   icon: React.ElementType;
   title: string;
@@ -141,8 +148,20 @@ const Feature = ({ icon: Icon, title, description }: {
   </div>
 );
 
+// -----------------------------
+// Page ServicesOverview
+// -----------------------------
 export const ServicesOverview = () => {
-  const { t } = useLanguage();
+  // Récupération du paramètre de langue depuis l'URL
+  const { lang } = useParams<{ lang: 'en' | 'fr' }>();
+  const { t, setLanguage } = useLanguage();
+
+  // Met à jour le contexte dès que le paramètre "lang" change
+  useEffect(() => {
+    if (lang) {
+      setLanguage(lang);
+    }
+  }, [lang, setLanguage]);
 
   const services = [
     {
@@ -219,8 +238,18 @@ export const ServicesOverview = () => {
   );
 };
 
+// -----------------------------
+// Page ChatbotService
+// -----------------------------
 export const ChatbotService = () => {
-  const { t } = useLanguage();
+  const { lang } = useParams<{ lang: 'en' | 'fr' }>();
+  const { t, setLanguage } = useLanguage();
+
+  useEffect(() => {
+    if (lang) {
+      setLanguage(lang);
+    }
+  }, [lang, setLanguage]);
 
   return (
     <div className="min-h-screen pt-40 pb-20 px-4">
@@ -322,8 +351,18 @@ export const ChatbotService = () => {
   );
 };
 
+// -----------------------------
+// Page AutomationService
+// -----------------------------
 export const AutomationService = () => {
-  const { t } = useLanguage();
+  const { lang } = useParams<{ lang: 'en' | 'fr' }>();
+  const { t, setLanguage } = useLanguage();
+
+  useEffect(() => {
+    if (lang) {
+      setLanguage(lang);
+    }
+  }, [lang, setLanguage]);
 
   return (
     <div className="min-h-screen pt-40 pb-20 px-4">

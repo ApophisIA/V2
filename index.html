@@ -31,6 +31,10 @@
             verify: { projectID: '677bda5f5e5388ed99d28cf1' },
             url: 'https://general-runtime.voiceflow.com',
             versionID: 'production',
+            render: {
+              mode: 'overlay'  // Affiche le widget en mode overlay (ou "bubble") pour éviter qu'il prenne toute la page
+              // Si vous préférez un widget positionné en bas, le mode overlay est généralement adapté.
+            },
             autostart: false,  // Le widget ne démarre pas tant que l'utilisateur n'a pas cliqué.
             launch: {
               event: {
