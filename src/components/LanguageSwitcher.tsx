@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Globe } from 'lucide-react';
 
@@ -18,18 +17,10 @@ const languages = [
 
 const LanguageSwitcher = () => {
   const { language, setLanguage } = useLanguage();
-  const { lang } = useParams<{ lang: 'en' | 'fr' }>();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Met à jour le contexte de langue si le paramètre "lang" dans l'URL diffère
-  useEffect(() => {
-    if (lang && lang !== language) {
-      setLanguage(lang);
-    }
-  }, [lang, language, setLanguage]);
-
-  const currentLanguage = languages.find((l) => l.code === language);
+  const currentLanguage = languages.find(lang => lang.code === language);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -55,26 +46,26 @@ const LanguageSwitcher = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-gray-900 ring-1 ring-black ring-opacity-5">
           <div className="py-1" role="menu">
-            {languages.map((langItem) => (
+            {languages.map((lang) => (
               <button
-                key={langItem.code}
+                key={lang.code}
                 onClick={() => {
-                  setLanguage(langItem.code as 'en' | 'fr');
+                  setLanguage(lang.code as 'en' | 'fr');
                   setIsOpen(false);
                 }}
                 className={`w-full flex items-center px-4 py-2 text-sm ${
-                  language === langItem.code
+                  language === lang.code
                     ? 'bg-purple-600/20 text-purple-400'
                     : 'text-gray-300 hover:bg-gray-800'
                 } transition-colors duration-200`}
                 role="menuitem"
               >
                 <img
-                  src={langItem.flag}
-                  alt={langItem.code}
+                  src={lang.flag}
+                  alt={lang.code}
                   className="w-5 h-5 object-cover rounded-sm mr-3"
                 />
-                {langItem.name}
+                {lang.name}
               </button>
             ))}
           </div>

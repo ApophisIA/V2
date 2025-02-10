@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer = () => {
-  const { t, getLocalizedPath, setLanguage, language } = useLanguage();
-  const { lang } = useParams<{ lang: 'en' | 'fr' }>();
+  const { t, getLocalizedPath } = useLanguage();
   const currentYear = new Date().getFullYear();
-
-  // Met à jour la langue si le paramètre "lang" dans l'URL diffère du contexte actuel
-  useEffect(() => {
-    if (lang && lang !== language) {
-      setLanguage(lang);
-    }
-  }, [lang, language, setLanguage]);
 
   return (
     <footer className="relative mt-20 border-t border-gray-800">

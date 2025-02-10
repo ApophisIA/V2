@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Check } from 'lucide-react';
-import { useParams } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { countryCodes } from '../data/countryCodes';
 
@@ -64,15 +63,7 @@ const calculatePrice = (basePrice: number, duration: string): number => {
 };
 
 const ChatbotForm = () => {
-  // Récupération du paramètre "lang" depuis l'URL et mise à jour du contexte de langue
-  const { lang } = useParams<{ lang: 'en' | 'fr' }>();
-  const { t, language, setLanguage } = useLanguage();
-  useEffect(() => {
-    if (lang && lang !== language) {
-      setLanguage(lang);
-    }
-  }, [lang, language, setLanguage]);
-
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [emailError, setEmailError] = useState('');
   const [phoneError, setPhoneError] = useState('');

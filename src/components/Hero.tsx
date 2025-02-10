@@ -1,22 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { useParams } from 'react-router-dom';
 
 const Hero = () => {
-  // Récupération du paramètre "lang" depuis l'URL
-  const { lang } = useParams<{ lang: 'en' | 'fr' }>();
-  const { t, setLanguage } = useLanguage();
-
-  // Met à jour le contexte de langue dès que le paramètre "lang" change
-  useEffect(() => {
-    if (lang) {
-      setLanguage(lang);
-    }
-  }, [lang, setLanguage]);
-
   const typingRef = useRef<HTMLSpanElement>(null);
   const [showSecondLine, setShowSecondLine] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const text = t('hero.empowerBusiness');
