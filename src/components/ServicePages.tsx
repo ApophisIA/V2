@@ -1,9 +1,12 @@
 import React from 'react';
-import { Bot, Globe, Zap, Database, Clock, BarChart3, Workflow, Mail, Users, GitBranch, CheckCircle2, ArrowRight, Plus, Rocket, Zap as Zap2, Check } from 'lucide-react';
+import { 
+  Bot, Globe, Zap, Database, Clock, BarChart3, Workflow, Mail, 
+  Users, GitBranch, CheckCircle2, ArrowRight, Plus, Rocket, Zap as Zap2, Check 
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
-const ServiceSection = ({ title, subtitle, description, features, buttonText, buttonLink, pricingTiers }: {
+interface ServiceSectionProps {
   title: React.ReactNode;
   subtitle: string;
   description: string;
@@ -20,28 +23,36 @@ const ServiceSection = ({ title, subtitle, description, features, buttonText, bu
       highlight?: boolean;
     }[];
   };
-}) => {
+}
+
+const ServiceSection = ({
+  title,
+  subtitle,
+  description,
+  features,
+  buttonText,
+  buttonLink,
+  pricingTiers,
+}: ServiceSectionProps) => {
   const { t } = useLanguage();
 
   return (
     <div className="space-y-12">
-      <div className="text-center space-y-6">
+      {/* En-tête de la section de service */}
+      <header className="text-center space-y-6">
         <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
           {title}
         </h1>
-        <h2 className="text-2xl md:text-3xl text-purple-300">
-          {subtitle}
-        </h2>
-        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-          {description}
-        </p>
-      </div>
+        <h2 className="text-2xl md:text-3xl text-purple-300">{subtitle}</h2>
+        <p className="text-xl text-gray-300 max-w-3xl mx-auto">{description}</p>
+      </header>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Liste des fonctionnalités */}
+      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {features.map((feature, index) => (
           <Feature key={index} {...feature} />
         ))}
-        <div className="relative group">
+        <article className="relative group" itemScope itemType="http://schema.org/Service">
           <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
           <div className="relative p-6 bg-gray-900/50 backdrop-blur-sm rounded-xl space-y-4 h-full flex flex-col items-center justify-center text-center">
             <div className="p-3 bg-purple-900/50 rounded-lg w-fit">
@@ -50,15 +61,16 @@ const ServiceSection = ({ title, subtitle, description, features, buttonText, bu
             <h3 className="text-lg font-semibold text-white">{t('features.more')}</h3>
             <p className="text-gray-400">{t('features.more.desc')}</p>
           </div>
-        </div>
-      </div>
+        </article>
+      </section>
 
+      {/* Section de Tarification */}
       {pricingTiers && (
-        <div className="mt-20">
-          <div className="text-center mb-12">
+        <section className="mt-20">
+          <header className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">{t('pricing.title')}</h2>
             <p className="text-xl text-gray-300">{t('pricing.subtitle')}</p>
-          </div>
+          </header>
 
           {pricingTiers.development && (
             <div className="mb-12">
@@ -66,7 +78,9 @@ const ServiceSection = ({ title, subtitle, description, features, buttonText, bu
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
                 <div className="relative p-6 bg-gray-900/50 backdrop-blur-sm rounded-xl text-center">
                   <h3 className="text-2xl font-bold text-white mb-2">{t('pricing.development')}</h3>
-                  <p className="text-4xl font-bold text-purple-400 mb-4">{t('pricing.startingAt')} {pricingTiers.development.price}</p>
+                  <p className="text-4xl font-bold text-purple-400 mb-4">
+                    {t('pricing.startingAt')} {pricingTiers.development.price}
+                  </p>
                   <p className="text-gray-300">{pricingTiers.development.description}</p>
                 </div>
               </div>
@@ -89,7 +103,9 @@ const ServiceSection = ({ title, subtitle, description, features, buttonText, bu
                     <p className="text-3xl font-bold text-purple-400">{tier.price}</p>
                     <p className="text-sm text-gray-400 mt-1">{t('pricing.perMonth')}</p>
                     {tier.messageLimit && (
-                      <p className="text-sm text-purple-300 mt-2">{t('pricing.upTo')} {tier.messageLimit} {t('plans.messages')}</p>
+                      <p className="text-sm text-purple-300 mt-2">
+                        {t('pricing.upTo')} {tier.messageLimit} {t('plans.messages')}
+                      </p>
                     )}
                     <div className="mt-3 space-y-1">
                       <p className="text-sm text-emerald-400">{t('pricing.saveSemiAnnual')}</p>
@@ -108,10 +124,11 @@ const ServiceSection = ({ title, subtitle, description, features, buttonText, bu
               </div>
             ))}
           </div>
-        </div>
+        </section>
       )}
 
-      <div className="text-center">
+      {/* Bouton d'action final */}
+      <footer className="text-center">
         <Link
           to={buttonLink}
           className="inline-flex items-center space-x-3 bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105"
@@ -119,7 +136,7 @@ const ServiceSection = ({ title, subtitle, description, features, buttonText, bu
           <span>{buttonText}</span>
           <ArrowRight className="w-6 h-6" />
         </Link>
-      </div>
+      </footer>
     </div>
   );
 };
@@ -129,7 +146,7 @@ const Feature = ({ icon: Icon, title, description }: {
   title: string;
   description: string;
 }) => (
-  <div className="relative group min-h-[200px]">
+  <article className="relative group min-h-[200px]" itemScope itemType="http://schema.org/Service">
     <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
     <div className="relative space-y-4 p-6 bg-gray-900/50 backdrop-blur-sm rounded-x1 h-full">
       <div className="p-3 bg-purple-900/50 rounded-lg w-fit">
@@ -138,7 +155,7 @@ const Feature = ({ icon: Icon, title, description }: {
       <h3 className="text-lg font-semibold text-white">{title}</h3>
       <p className="text-gray-400">{description}</p>
     </div>
-  </div>
+  </article>
 );
 
 export const ServicesOverview = () => {
@@ -172,19 +189,18 @@ export const ServicesOverview = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-32 pb-20 px-4">
+    <main className="min-h-screen pt-32 pb-20 px-4" itemScope itemType="http://schema.org/Service">
+      <meta itemProp="name" content={t('services.title')} />
       <div className="max-w-7xl mx-auto space-y-20">
-        <div className="text-center mb-16">
+        <header className="text-center mb-16">
           <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-6">
             {t('services.title')}
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            {t('services.subtitle')}
-          </p>
-        </div>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">{t('services.subtitle')}</p>
+        </header>
 
-        {services.map((service, index) => (
-          <div key={service.title} className="relative group">
+        {services.map((service) => (
+          <article key={service.title} className="relative group" itemScope itemType="http://schema.org/Service">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
             <div className="relative p-8 bg-gray-900/50 backdrop-blur-sm rounded-2xl">
               <div className="space-y-6">
@@ -192,30 +208,31 @@ export const ServicesOverview = () => {
                 <h3 className="text-2xl text-purple-300">{service.subtitle}</h3>
                 <p className="text-gray-300 text-lg">{service.description}</p>
                 
-                <div className="grid md:grid-cols-3 gap-6 my-8">
+                <section className="grid md:grid-cols-3 gap-6 my-8">
                   {service.features.map((feature, idx) => (
-                    <div key={idx} className="bg-gray-800/50 p-6 rounded-xl">
-                      <h4 className="text-white font-semibold mb-2">{feature.title}</h4>
-                      <p className="text-gray-400">{feature.description}</p>
-                    </div>
+                    <article key={idx} className="bg-gray-800/50 p-6 rounded-xl" itemScope itemType="http://schema.org/Service">
+                      <h4 className="text-white font-semibold mb-2" itemProp="serviceType">{feature.title}</h4>
+                      <p className="text-gray-400" itemProp="description">{feature.description}</p>
+                    </article>
                   ))}
-                </div>
+                </section>
 
-                <div className="text-center">
+                <footer className="text-center">
                   <Link
                     to={service.buttonLink}
                     className="inline-flex items-center space-x-3 bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105"
+                    itemProp="url"
                   >
                     <span>{service.buttonText}</span>
                     <ArrowRight className="w-6 h-6" />
                   </Link>
-                </div>
+                </footer>
               </div>
             </div>
-          </div>
+          </article>
         ))}
       </div>
-    </div>
+    </main>
   );
 };
 
@@ -223,7 +240,8 @@ export const ChatbotService = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen pt-40 pb-20 px-4">
+    <main className="min-h-screen pt-40 pb-20 px-4" itemScope itemType="http://schema.org/Service">
+      <meta itemProp="name" content={t('chatbot.title')} />
       <div className="max-w-7xl mx-auto">
         <ServiceSection
           title={
@@ -318,7 +336,7 @@ export const ChatbotService = () => {
           }}
         />
       </div>
-    </div>
+    </main>
   );
 };
 
@@ -326,7 +344,8 @@ export const AutomationService = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen pt-40 pb-20 px-4">
+    <main className="min-h-screen pt-40 pb-20 px-4" itemScope itemType="http://schema.org/Service">
+      <meta itemProp="name" content={t('automation.title')} />
       <div className="max-w-7xl mx-auto">
         <ServiceSection
           title={
@@ -373,6 +392,6 @@ export const AutomationService = () => {
           ]}
         />
       </div>
-    </div>
+    </main>
   );
 };

@@ -3,7 +3,7 @@ import { Bot, Cog } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
-const ServiceCard = ({ title, description, icon: Icon, link, buttonText, image, imagePosition = 'right', animate = true }: {
+interface ServiceCardProps {
   title: string;
   description: string;
   icon: React.ElementType;
@@ -12,17 +12,32 @@ const ServiceCard = ({ title, description, icon: Icon, link, buttonText, image, 
   image?: string;
   imagePosition?: 'left' | 'right';
   animate?: boolean;
-}) => {
+}
+
+const ServiceCard = ({
+  title,
+  description,
+  icon: Icon,
+  link,
+  buttonText,
+  image,
+  imagePosition = 'right',
+  animate = true,
+}: ServiceCardProps) => {
   const { getLocalizedPath } = useLanguage();
 
   return (
-    <div className="relative">
+    <article className="relative" itemScope itemType="http://schema.org/Service">
+      {/* Définition du nom du service */}
+      <meta itemProp="name" content={title} />
       <div className="relative flex items-center min-h-[600px]">
-        <div className={`relative w-full md:w-1/2 rounded-2xl p-8 transform transition-all duration-500 hover:translate-y-[-10px] z-10 ${
-          imagePosition === 'left' ? 'md:ml-auto' : ''
-        }`}>
+        <div
+          className={`relative w-full md:w-1/2 rounded-2xl p-8 transform transition-all duration-500 hover:translate-y-[-10px] z-10 ${
+            imagePosition === 'left' ? 'md:ml-auto' : ''
+          }`}
+        >
           <div className="absolute inset-0 bg-purple-600/10 rounded-2xl blur-xl group-hover:bg-purple-600/20 transition-all duration-500" />
-          
+
           <div className="relative z-10">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-purple-900/50 backdrop-blur-sm mb-6">
               <div className="text-purple-400 mr-2">
@@ -31,20 +46,26 @@ const ServiceCard = ({ title, description, icon: Icon, link, buttonText, image, 
               <span className="text-sm text-purple-300">BUILD, LAUNCH, SUCCEED</span>
             </div>
 
-            <h3 className="text-4xl font-bold text-white mb-4">
+            <h3 className="text-4xl font-bold text-white mb-4" itemProp="serviceType">
               {title}
             </h3>
 
-            <p className="text-gray-400 text-lg mb-8">
+            <p className="text-gray-400 text-lg mb-8" itemProp="description">
               {description}
             </p>
 
-            <Link 
+            <Link
               to={getLocalizedPath(link)}
               className="inline-flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:translate-x-2"
+              itemProp="url"
             >
               <span>{buttonText}</span>
-              <span className="transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+              <span
+                className="transform transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              >
+                →
+              </span>
             </Link>
           </div>
 
@@ -53,18 +74,23 @@ const ServiceCard = ({ title, description, icon: Icon, link, buttonText, image, 
         </div>
 
         {image && (
-          <div className={`absolute ${imagePosition === 'left' ? 'left-0' : 'right-0'} top-1/2 -translate-y-1/2 w-2/3 h-full z-0 ${animate ? 'animate-float' : ''}`}>
+          <div
+            className={`absolute ${
+              imagePosition === 'left' ? 'left-0' : 'right-0'
+            } top-1/2 -translate-y-1/2 w-2/3 h-full z-0 ${animate ? 'animate-float' : ''}`}
+          >
             <div className="relative w-full h-full">
-              <img 
+              <img
                 src={image}
                 alt={title}
                 className="w-full h-full object-contain transition-all duration-500"
+                itemProp="image"
               />
             </div>
           </div>
         )}
       </div>
-    </div>
+    </article>
   );
 };
 
@@ -79,7 +105,7 @@ const ServicesGrid = () => {
       link: '/services/chatbot',
       buttonText: t('chatbot.getYours'),
       image: '/Apophis.IA CHATBOT.png',
-      animate: true
+      animate: true,
     },
     {
       title: t('automation.title'),
@@ -88,12 +114,20 @@ const ServicesGrid = () => {
       link: '/services/automation',
       buttonText: t('automation.getYours'),
       image: '/Animation Process Auto.gif',
-      animate: false
-    }
+      animate: false,
+    },
   ];
 
   return (
-    <section className="relative py-32" id="services">      
+    <section className="relative py-32" id="services">
+      <header className="text-center mb-16">
+        <h2 className="text-5xl font-bold text-white">
+          {t('services.title') || 'Our Services'}
+        </h2>
+        <p className="text-xl text-gray-300 mt-4">
+          {t('services.subtitle') || 'Transform your business with our innovative solutions.'}
+        </p>
+      </header>
       <div className="relative max-w-7xl mx-auto px-8">
         <div className="space-y-24">
           {services.map((service) => (
