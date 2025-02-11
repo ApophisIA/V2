@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+
 type Language = 'en' | 'fr';
 
 interface LanguageContextType {
@@ -615,19 +616,22 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguageState] = useState<Language>('en');
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Détermine la langue par défaut en fonction de l'URL
+  const defaultLanguage: Language = location.pathname.startsWith('/fr') ? 'fr' : 'en';
+  const [language, setLanguageState] = useState<Language>(defaultLanguage);
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
-    // Update URL to reflect new language
+    // Met à jour l'URL pour refléter la nouvelle langue
     const newPath = location.pathname.replace(/^\/(en|fr)/, `/${lang}`);
     navigate(newPath);
   }, [location.pathname, navigate]);
 
   const getLocalizedPath = useCallback((path: string) => {
-    // Remove leading slash if present
+    // Retire le slash initial si présent
     const cleanPath = path.startsWith('/') ? path.slice(1) : path;
     return `/${language}/${cleanPath}`;
   }, [language]);
