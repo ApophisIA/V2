@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import ServicesGrid from './components/ServicesGrid';
 import { useScrollTop } from './hooks/useScrollTop';
 import { useLanguage } from './contexts/LanguageContext';
+import { FAQProvider } from './contexts/FAQContext';
 
 // Lazy load components
 const ChatbotService = React.lazy(() => import('./components/ServicePages').then(module => ({ default: module.ChatbotService })));
@@ -44,39 +45,41 @@ function App() {
         <Header />
         <main className="flex-grow">
           <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              {/* Redirect root to language-specific home */}
-              <Route path="/" element={<Navigate to={`/${language}`} replace />} />
-              
-              {/* English routes */}
-              <Route path="/en" element={<MainContent />} />
-              <Route path="/en/services" element={<ServicesOverview />} />
-              <Route path="/en/services/chatbot" element={<ChatbotService />} />
-              <Route path="/en/services/automation" element={<AutomationService />} />
-              <Route path="/en/services/chatbot/form" element={<ChatbotForm />} />
-              <Route path="/en/services/automation/form" element={<AutomationForm />} />
-              <Route path="/en/contact" element={<Contact />} />
-              <Route path="/en/privacy" element={<PrivacyPolicy />} />
-              <Route path="/en/terms" element={<TermsOfService />} />
-              <Route path="/en/conditions" element={<GeneralConditions />} />
-              <Route path="/en/faq" element={<FAQ />} />
+            <FAQProvider>
+              <Routes>
+                {/* Redirect root to language-specific home */}
+                <Route path="/" element={<Navigate to={`/${language}`} replace />} />
+                
+                {/* English routes */}
+                <Route path="/en" element={<MainContent />} />
+                <Route path="/en/services" element={<ServicesOverview />} />
+                <Route path="/en/services/chatbot" element={<ChatbotService />} />
+                <Route path="/en/services/automation" element={<AutomationService />} />
+                <Route path="/en/services/chatbot/form" element={<ChatbotForm />} />
+                <Route path="/en/services/automation/form" element={<AutomationForm />} />
+                <Route path="/en/contact" element={<Contact />} />
+                <Route path="/en/privacy" element={<PrivacyPolicy />} />
+                <Route path="/en/terms" element={<TermsOfService />} />
+                <Route path="/en/conditions" element={<GeneralConditions />} />
+                <Route path="/en/faq" element={<FAQ />} />
 
-              {/* French routes */}
-              <Route path="/fr" element={<MainContent />} />
-              <Route path="/fr/services" element={<ServicesOverview />} />
-              <Route path="/fr/services/chatbot" element={<ChatbotService />} />
-              <Route path="/fr/services/automation" element={<AutomationService />} />
-              <Route path="/fr/services/chatbot/form" element={<ChatbotForm />} />
-              <Route path="/fr/services/automation/form" element={<AutomationForm />} />
-              <Route path="/fr/contact" element={<Contact />} />
-              <Route path="/fr/privacy" element={<PrivacyPolicy />} />
-              <Route path="/fr/terms" element={<TermsOfService />} />
-              <Route path="/fr/conditions" element={<GeneralConditions />} />
-              <Route path="/fr/faq" element={<FAQ />} />
+                {/* French routes */}
+                <Route path="/fr" element={<MainContent />} />
+                <Route path="/fr/services" element={<ServicesOverview />} />
+                <Route path="/fr/services/chatbot" element={<ChatbotService />} />
+                <Route path="/fr/services/automation" element={<AutomationService />} />
+                <Route path="/fr/services/chatbot/form" element={<ChatbotForm />} />
+                <Route path="/fr/services/automation/form" element={<AutomationForm />} />
+                <Route path="/fr/contact" element={<Contact />} />
+                <Route path="/fr/privacy" element={<PrivacyPolicy />} />
+                <Route path="/fr/terms" element={<TermsOfService />} />
+                <Route path="/fr/conditions" element={<GeneralConditions />} />
+                <Route path="/fr/faq" element={<FAQ />} />
 
-              {/* Catch all redirect */}
-              <Route path="*" element={<Navigate to={`/${language}`} replace />} />
-            </Routes>
+                {/* Catch all redirect */}
+                <Route path="*" element={<Navigate to={`/${language}`} replace />} />
+              </Routes>
+            </FAQProvider>
           </Suspense>
         </main>
         <Footer />

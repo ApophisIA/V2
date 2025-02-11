@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { countryCodes } from '../data/countryCodes';
+import { Link } from 'react-router-dom';
 
 type FormData = {
   firstName: string;
@@ -63,11 +64,12 @@ const calculatePrice = (basePrice: number, duration: string): number => {
 };
 
 const ChatbotForm = () => {
-  const { t } = useLanguage();
+  const { t, getLocalizedPath } = useLanguage();
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [emailError, setEmailError] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [charCount, setCharCount] = useState(0);
 
   const getBasePriceFromTier = (tier: string): number => {
     switch (tier) {
@@ -110,6 +112,15 @@ const ChatbotForm = () => {
       setPhoneError(validatePhone(value) ? '' : 'Please enter a valid phone number');
     }
 
+    if (name === 'chatbotDescription') {
+      setCharCount(value.length);
+      if (value.length <= 1000) {
+        setFormData(prev => ({ ...prev, [name]: value }));
+      }
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+
     if (type === 'checkbox') {
       setFormData(prev => ({ ...prev, [name]: (e.target as HTMLInputElement).checked }));
     } else {
@@ -130,10 +141,37 @@ const ChatbotForm = () => {
       formData.subscriptionTier !== '' &&
       // New fields validation
       formData.chatbotDescription.trim() !== '' &&
+      formData.chatbotDescription.length >= 50 &&
       formData.connectAPIs.trim() !== '' &&
       (formData.connectAPIs === 'yes' ? formData.apisIntegration.trim() !== '' : true) &&
       formData.termsAccepted === true
     );
+  };
+
+  const getDiscountedPriceDisplay = (): string => {
+    const basePrice = getBasePriceFromTier(formData.subscriptionTier);
+    const duration = formData.subscriptionDuration;
+    let originalTotal: number;
+    switch (duration) {
+      case 'annually':
+        originalTotal = basePrice * 12;
+        break;
+      case 'semi-annually':
+        originalTotal = basePrice * 6;
+        break;
+      default:
+        originalTotal = basePrice;
+    }
+    const adjusted = calculatePrice(basePrice, duration);
+  
+    if (duration === 'monthly') {
+      // Pour le paiement mensuel, affiche uniquement le prix ajusté
+      return `€${adjusted.toLocaleString()}`;
+    } else {
+      // Pour les autres durées, affiche le prix ajusté et la réduction
+      const discountAmount = originalTotal - adjusted;
+      return `€${adjusted.toLocaleString()} (-€${discountAmount.toLocaleString()})`;
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -251,7 +289,7 @@ const ChatbotForm = () => {
                   name="countryCode"
                   value={formData.countryCode}
                   onChange={handleInputChange}
-                  className="w-32 px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 text-white focus:ring-2 focus:ring-purple-500"
+                  className="min-w-[8rem] w-auto px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 text-white focus:ring-2 focus:ring-purple-500"
                   required
                 >
                   <option value="">{t('form.chatbot.select.code')}</option>
@@ -303,18 +341,43 @@ const ChatbotForm = () => {
               <textarea
                 name="chatbotDescription"
                 value={formData.chatbotDescription}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  handleInputChange(e);
+                  // Auto-ajustement de la hauteur
+                  e.target.style.height = 'auto';
+                  e.target.style.height = `${e.target.scrollHeight}px`;
+                }}
                 placeholder={t('form.chatbot.description.placeholder')}
-                className="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 text-white focus:ring-2 focus:ring-purple-500"
+                className="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 text-white focus:ring-2 focus:ring-purple-500 resize-none"
                 required
+                maxLength={1000}
               />
+              <div className="mt-2 flex justify-between text-sm">
+                <span className={charCount < 50 ? 'text-red-500' : 'text-green-500'}>
+                  {charCount < 50 
+                    ? `${50 - charCount} ${t('form.automation.min.chars')}` 
+                    : t('form.automation.min.chars.met')}
+                </span>
+                <span className="text-gray-400">
+                  {charCount}/1000 {t('form.automation.chars.left')}</span>
+              </div>
             </div>
 
             {/* New Field: API Integration with two checkboxes */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                {t('form.chatbot.api.question')} *
-              </label>
+            <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+              {t('form.chatbot.api.question')} *
+              <div className="relative group ml-2">
+                {/* Icône de point d'interrogation */}
+                <span className="inline-flex items-center justify-center w-3 h-3 rounded-full bg-purple-600 border border-purple-700 text-white cursor-pointer">
+                  ?
+                </span>
+                {/* Tooltip caché qui s'affiche au survol */}
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-2 bg-gray-800 text-white text-xs rounded shadow-lg z-10">
+                  {t('form.chatbot.api.tooltip')}
+                </div>
+              </div>
+            </label>
               <div className="flex items-center space-x-6">
                 <label className="flex items-center">
                   <input
@@ -370,9 +433,17 @@ const ChatbotForm = () => {
             )}
 
             <div className="space-y-4">
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                {t('form.chatbot.deployment')} *
-              </label>
+            <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+              {t('form.chatbot.deployment')} *
+              <div className="relative group ml-2">
+                <span className="inline-flex items-center justify-center w-3 h-3 rounded-full bg-purple-600 border border-purple-700 text-white cursor-pointer font-bold">
+                  ?
+                </span>
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-2 bg-gray-800 text-white text-xs rounded shadow-lg z-10">
+                  {t('form.chatbot.deployment.tooltip')}
+                </div>
+              </div>
+            </label>
               <div className="space-y-4">
                 <label className="flex items-center space-x-3">
                   <input
@@ -452,8 +523,17 @@ const ChatbotForm = () => {
               {formData.subscriptionTier && (
                 <div className="mt-4 p-4 bg-purple-900/20 rounded-lg">
                   <p className="text-purple-300">
-                    {t('form.chatbot.total.cost')}: <span className="font-semibold">{getAdjustedPrice()}</span>
+                    {t('form.chatbot.total.cost')}: <span className="font-semibold">{getDiscountedPriceDisplay()}</span> + <span className="text-sm font-semibold">{t('form.chatbot.development.cost')}</span>
                   </p>
+                  <p className="text-purple-300 mt-10">
+                    {t('generalConditions.paymentTerms.description')}
+                  </p>
+                  <ul className="list-disc pl-6 text-purple-300 text-sm space-y-1 mt-3">
+                    <li>{t('generalConditions.paymentTerms.description1')}</li>
+                    <li>{t('generalConditions.paymentTerms.description2')}</li>
+                    <li>{t('generalConditions.paymentTerms.description3')}</li>
+                    <li>{t('generalConditions.paymentTerms.description4')}</li>
+                  </ul>
                   <p className="text-purple-300 mt-2">
                     {t('form.chatbot.nocost')} *
                   </p>
@@ -472,7 +552,16 @@ const ChatbotForm = () => {
                 required
               />
               <span className="ml-2 text-white text-sm">
-                {t('form.terms')}
+                {t('form.terms')}{' '}
+                (
+                <Link to={getLocalizedPath('terms')} className="underline hover:text-purple-400">
+                  {t('footer.terms')}
+                </Link>
+                {' '} &amp; {' '}
+                <Link to={getLocalizedPath('conditions')} className="underline hover:text-purple-400">
+                  {t('footer.conditions')}
+                </Link>
+                )
               </span>
             </div>
 

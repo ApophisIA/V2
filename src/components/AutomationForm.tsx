@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { countryCodes } from '../data/countryCodes';
+import { Link } from 'react-router-dom';
 
 
 type FormData = {
@@ -51,7 +52,7 @@ const validateUrl = (url: string): boolean => {
 };
 
 const AutomationForm = () => {
-  const { t } = useLanguage();
+  const { t, getLocalizedPath } = useLanguage();
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [emailError, setEmailError] = useState('');
   const [phoneError, setPhoneError] = useState('');
@@ -226,7 +227,7 @@ const AutomationForm = () => {
                   name="countryCode"
                   value={formData.countryCode}
                   onChange={handleInputChange}
-                  className="w-32 px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 text-white focus:ring-2 focus:ring-purple-500"
+                  className="min-w-[8rem] w-auto px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 text-white focus:ring-2 focus:ring-purple-500"
                   required
                 >
                   <option value="">{t('form.chatbot.select.code')}</option>
@@ -326,7 +327,16 @@ const AutomationForm = () => {
                 required
               />
               <span className="ml-2 text-white text-sm">
-                {t('form.terms')}
+                {t('form.terms')}{' '}
+                (
+                <Link to={getLocalizedPath('terms')} className="underline hover:text-purple-400">
+                  {t('footer.terms')}
+                </Link>
+                {' '} &amp; {' '}
+                <Link to={getLocalizedPath('conditions')} className="underline hover:text-purple-400">
+                  {t('footer.conditions')}
+                </Link>
+                )
               </span>
             </div>
 

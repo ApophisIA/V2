@@ -129,9 +129,9 @@ const Feature = ({ icon: Icon, title, description }: {
   title: string;
   description: string;
 }) => (
-  <div className="relative group">
+  <div className="relative group min-h-[200px]">
     <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
-    <div className="relative p-6 bg-gray-900/50 backdrop-blur-sm rounded-xl space-y-4">
+    <div className="relative space-y-4 p-6 bg-gray-900/50 backdrop-blur-sm rounded-x1 h-full">
       <div className="p-3 bg-purple-900/50 rounded-lg w-fit">
         <Icon className="w-6 h-6 text-purple-400" />
       </div>
