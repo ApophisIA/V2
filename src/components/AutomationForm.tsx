@@ -61,7 +61,8 @@ const AutomationForm = () => {
   const [charCount, setCharCount] = useState(0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    const { name, type, value, checked } = e.target;
+    const inputValue = type === 'checkbox' ? checked : value;
     
     if (name === 'email') {
       setEmailError(validateEmail(value) ? '' : 'Please enter a valid email address');
@@ -81,7 +82,7 @@ const AutomationForm = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
       }
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData(prev => ({ ...prev, [name]: inputValue }));
     }
   };
 
