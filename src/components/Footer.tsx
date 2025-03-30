@@ -68,7 +68,10 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-gray-800">
           <p className="text-center text-gray-400">
-            © {currentYear} Apophis.IA. {t('footer.rights')}
+            © {currentYear} Apophis.IA. {t('footer.rights')} Designed by{' '}
+            <a href="https://www.b-studio.lu" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
+              B-Studio
+            </a>.
           </p>
         </div>
       </div>
