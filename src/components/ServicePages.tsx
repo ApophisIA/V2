@@ -294,7 +294,7 @@ export const ChatbotService = () => {
             maintenance: [
               {
                 title: t('plans.basic.title'),
-                price: "€700",
+                price: "€300",
                 messageLimit: "50K",
                 features: [
                   t('plans.basic.feature1'),
@@ -306,7 +306,7 @@ export const ChatbotService = () => {
               },
               {
                 title: t('plans.standard.title'),
-                price: "€1,250",
+                price: "€650",
                 messageLimit: "100K",
                 features: [
                   t('plans.standard.feature1'),
@@ -320,7 +320,7 @@ export const ChatbotService = () => {
               },
               {
                 title: t('plans.premium.title'),
-                price: "€1,500",
+                price: "€1200",
                 messageLimit: "300K+",
                 features: [
                   t('plans.premium.feature1'),

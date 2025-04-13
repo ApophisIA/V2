@@ -74,11 +74,11 @@ const ChatbotForm = () => {
   const getBasePriceFromTier = (tier: string): number => {
     switch (tier) {
       case 'basic':
-        return 700;
+        return 300;
       case 'standard':
-        return 1250;
+        return 650;
       case 'premium':
-        return 1500;
+        return 1200;
       default:
         return 0;
     }
