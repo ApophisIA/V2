@@ -295,33 +295,33 @@ export const ChatbotService = () => {
               {
                 title: t('plans.basic.title'),
                 price: "€300",
-                messageLimit: "50K",
+                messageLimit: "10K",
                 features: [
                   t('plans.basic.feature1'),
                   t('plans.basic.feature2'),
                   t('plans.basic.feature3'),
-                  t('plans.basic.feature4'),
-                  t('plans.basic.feature5')
+                  t('plans.basic.feature4')
                 ]
               },
               {
                 title: t('plans.standard.title'),
                 price: "€650",
-                messageLimit: "100K",
+                messageLimit: "50K",
                 features: [
                   t('plans.standard.feature1'),
                   t('plans.standard.feature2'),
                   t('plans.standard.feature3'),
                   t('plans.standard.feature4'),
                   t('plans.standard.feature5'),
-                  t('plans.standard.feature6')
+                  t('plans.standard.feature6'),
+                  t('plans.basic.feature5')
                 ],
                 highlight: true
               },
               {
                 title: t('plans.premium.title'),
                 price: "€1200",
-                messageLimit: "300K+",
+                messageLimit: "100K+",
                 features: [
                   t('plans.premium.feature1'),
                   t('plans.premium.feature2'),
