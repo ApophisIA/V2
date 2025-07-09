@@ -320,7 +320,7 @@ export const ChatbotService = () => {
               },
               {
                 title: t('plans.premium.title'),
-                price: "€1200",
+                price: "Custom pricing",
                 messageLimit: "100K+",
                 features: [
                   t('plans.premium.feature1'),

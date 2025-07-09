@@ -525,7 +525,7 @@ const ChatbotForm = () => {
                   <p className="text-purple-300">
                     {t('form.chatbot.total.cost')}: <span className="font-semibold">{getDiscountedPriceDisplay()}</span> + <span className="text-sm font-semibold">{t('form.chatbot.development.cost')}</span>
                   </p>
-                  <p className="text-purple-300 mt-10">
+                  {/* <p className="text-purple-300 mt-10">
                     {t('generalConditions.paymentTerms.description')}
                   </p>
                   <ul className="list-disc pl-6 text-purple-300 text-sm space-y-1 mt-3">
@@ -533,7 +533,7 @@ const ChatbotForm = () => {
                     <li>{t('generalConditions.paymentTerms.description2')}</li>
                     <li>{t('generalConditions.paymentTerms.description3')}</li>
                     <li>{t('generalConditions.paymentTerms.description4')}</li>
-                  </ul>
+                  </ul>*/}
                   <p className="text-purple-300 mt-2">
                     {t('form.chatbot.nocost')} *
                   </p>

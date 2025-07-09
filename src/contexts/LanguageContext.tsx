@@ -75,7 +75,7 @@ const translations = {
     'pricing.development': 'Development Cost',
     'pricing.startingAt': 'Starting at',
     'pricing.perMonth': 'per month',
-    'pricing.saveAnnual': 'Save 20% on annual plan',
+    'pricing.saveAnnual': 'Save 15% on annual plan',
     'pricing.saveSemiAnnual': 'Save 10% on 6-month plan',
     'pricing.upTo': 'Up to',
     'pricing.development.description': 'One-time fee for custom development and setup',
@@ -150,7 +150,7 @@ const translations = {
     'form.chatbot.select.code': 'Select code',
     'form.chatbot.monthly': 'Monthly',
     'form.chatbot.semi.annually': '6 Months (Save 10%)',
-    'form.chatbot.annually': '12 Months (Save 20%)',
+    'form.chatbot.annually': '12 Months (Save 15%)',
     'form.chatbot.total.cost': 'Total cost',
     'form.chatbot.messages': 'messages',
     'form.chatbot.requirements': 'Chatbot Requirements',
@@ -190,7 +190,7 @@ const translations = {
     //GENERAL TITLE
     'generalConditions.title' : 'General Conditions',
     // General Conditions - English
-    'generalConditions.lastUpdated': 'Last updated: 11/02/2025',
+    'generalConditions.lastUpdated': 'Last updated: 09/07/2025',
 
     // 1. Service Delivery
     'generalConditions.serviceDelivery.title': 'Service Delivery',
@@ -273,7 +273,7 @@ const translations = {
 
     // Privacy Policy - English
     'privacyPolicy.title': 'Privacy Policy',
-    'privacyPolicy.lastUpdated': 'Last updated: 11/02/2025',
+    'privacyPolicy.lastUpdated': 'Last updated: 09/07/2025',
 
     // 1. Information We Collect
     'privacyPolicy.information.title': '1. Information We Collect',
@@ -375,7 +375,7 @@ const translations = {
     'pricing.development': 'Coût de Développement',
     'pricing.startingAt': 'À partir de',
     'pricing.perMonth': 'par mois',
-    'pricing.saveAnnual': 'Économisez 20% sur le plan annuel',
+    'pricing.saveAnnual': 'Économisez 15% sur le plan annuel',
     'pricing.saveSemiAnnual': 'Économisez 10% sur le plan 6 mois',
     'pricing.upTo': 'Jusqu\'à',
     'pricing.development.description': 'Frais unique pour le développement et la configuration personnalisés',
@@ -450,7 +450,7 @@ const translations = {
     'form.chatbot.select.code': 'Sélectionnez code',
     'form.chatbot.monthly': 'Mensuel',
     'form.chatbot.semi.annually': '6 Mois (Économisez 10%)',
-    'form.chatbot.annually': '12 Mois (Économisez 20%)',
+    'form.chatbot.annually': '12 Mois (Économisez 15%)',
     'form.chatbot.total.cost': 'Coût total',
     'form.chatbot.messages': 'messages',
     'form.chatbot.requirements': 'Exigences du Chatbot',
@@ -490,7 +490,7 @@ const translations = {
     //GENERAL TITLE
     'generalConditions.title' : 'Conditions générales',
     // Conditions Générales - Français
-    'generalConditions.lastUpdated': 'Dernière mise à jour : 11/02/2025',
+    'generalConditions.lastUpdated': 'Dernière mise à jour : 09/07/2025',
 
     // 1. Prestation de Services
     'generalConditions.serviceDelivery.title': 'Prestation de Services',
